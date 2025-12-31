@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Professional JavaFX Shop Billing System
 
 A comprehensive point-of-sale (POS) system built with JavaFX and MySQL, designed for retail shops and small businesses.
@@ -227,3 +228,6 @@ For support and questions:
 ---
 
 **Professional JavaFX Shop Billing System** - Built for modern retail businesses with efficiency and reliability in mind.
+=======
+# SocialAnalystPro
+>>>>>>> e514db69615bad3ddf4c54ed8be90dab43f4359b
