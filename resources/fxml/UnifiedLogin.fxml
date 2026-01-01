@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shopbilling.controller.UnifiedLoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <VBox alignment="CENTER" spacing="15" styleClass="product-card" maxWidth="350">
+        <Label text="E-Shop Billing System" styleClass="h1" />
+
+        <ToggleButton fx:id="roleToggle" text="Switch to Customer" onAction="#toggleRole" />
+
+        <VBox fx:id="adminLoginBox" spacing="15" alignment="CENTER">
+            <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Username" />
+                <TextField fx:id="usernameField" promptText="Enter username" />
+            </VBox>
+
+            <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Password" />
+                <PasswordField fx:id="passwordField" promptText="Enter password" />
+            </VBox>
+        </VBox>
+
+        <VBox fx:id="customerLoginBox" spacing="15" alignment="CENTER" visible="false" managed="false">
+            <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Username" />
+                <TextField fx:id="customerUsernameField" promptText="Enter username" />
+            </VBox>
+            <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+                <Label text="Password" />
+                <PasswordField fx:id="customerPasswordField" promptText="Enter password" />
+            </VBox>
+        </VBox>
+
+        <Label fx:id="errorLabel" styleClass="button-danger" visible="false" wrapText="true" />
+
+        <Button fx:id="loginButton" text="Login" onAction="#handleLogin" maxWidth="300" />
+
+        <Hyperlink fx:id="registrationLink" text="Don't have an account? Register here" onAction="#handleRegistrationLink" />
+    </VBox>
+</VBox>

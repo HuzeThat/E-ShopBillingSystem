@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shopbilling.controller.CustomerLoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+
+    <VBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 40; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" maxWidth="400">
+        <Label text="Customer Login" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+            <Label text="Username" style="-fx-font-weight: bold;" />
+            <TextField fx:id="usernameField" promptText="Enter your username" />
+        </VBox>
+
+        <VBox spacing="5" alignment="CENTER_LEFT" maxWidth="300">
+            <Label text="Password" style="-fx-font-weight: bold;" />
+            <PasswordField fx:id="passwordField" promptText="Enter your password" />
+        </VBox>
+
+        <Button onAction="#handleLogin" text="Login" maxWidth="300" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10;" />
+        <Button onAction="#handleShowRegistration" text="Don't have an account? Register" maxWidth="300" style="-fx-background-color: #27ae60; -fx-text-fill: white;" />
+    </VBox>
+</VBox>

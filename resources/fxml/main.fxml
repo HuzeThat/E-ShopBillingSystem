@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.TilePane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.shopbilling.controller.MainController">
+  <top>
+    <VBox>
+      <MenuBar>
+        <Menu text="File">
+          <MenuItem onAction="#logout" text="Logout" />
+          <MenuItem text="Exit" />
+        </Menu>
+        <Menu text="View">
+          <MenuItem onAction="#openCustomerDashboard" text="Customer Dashboard" />
+        </Menu>
+        <Menu text="Help">
+          <MenuItem text="About" />
+        </Menu>
+      </MenuBar>
+      <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-background-color: #2c3e50; -fx-padding: 15;">
+        <Label text="E-Shop_Billing_Seystem" textFill="WHITE">
+          <font>
+            <Font name="System Bold" size="18.0" />
+          </font>
+        </Label>
+        <Region HBox.hgrow="ALWAYS" />
+
+        <!-- Notification Button -->
+        <Button fx:id="notificationBtn" onAction="#handleNotificationClick" styleClass="button-danger" text="0" visible="false">
+           <tooltip>
+              <Tooltip text="Pending Orders" />
+           </tooltip>
+        </Button>
+
+        <Button onAction="#openCustomerDashboard" prefHeight="25.0" prefWidth="77.0" text="Customer Dashboard" />
+        <Button onAction="#logout" styleClass="button-danger" text="Logout" />
+      </HBox>
+    </VBox>
+  </top>
+  
+  <center>
+    <VBox>
+      <FlowPane hgap="10" vgap="10" style="-fx-padding: 10;">
+        <VBox styleClass="kpi-card, kpi-card-total-customers">
+          <Label text="Total Customers" />
+          <Label fx:id="totalCustomersLabel" text="0" />
+        </VBox>
+        <VBox styleClass="kpi-card, kpi-card-total-products">
+          <Label text="Total Products" />
+          <Label fx:id="totalProductsLabel" text="0" />
+        </VBox>
+        <VBox styleClass="kpi-card, kpi-card-total-revenue">
+          <Label text="Total Revenue" />
+          <Label fx:id="totalRevenueLabel" text="ETB 0.00" />
+        </VBox>
+        <VBox styleClass="kpi-card, kpi-card-highest-bill">
+          <Label text="Highest Bill" />
+          <Label fx:id="highestBillLabel" text="ETB 0.00" />
+        </VBox>
+        <VBox styleClass="kpi-card, kpi-card-lowest-bill">
+          <Label text="Lowest Bill" />
+          <Label fx:id="lowestBillLabel" text="ETB 0.00" />
+        </VBox>
+      </FlowPane>
+      <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+
+        <!-- MyProducts Tab (Formerly Billing) -->
+        <Tab text="MyProducts">
+          <HBox spacing="10">
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+
+            <!-- Left Panel - Products Grid -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <Label styleClass="h2" text="Select Products to Add" />
+
+              <HBox spacing="10">
+                <TextField fx:id="searchProductField" promptText="Search products..." HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="sortComboBox" prefWidth="150" promptText="Sort By..." />
+                <ComboBox fx:id="categoryComboBox" prefWidth="150" promptText="Select Category" />
+              </HBox>
+
+              <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                  <content>
+                      <TilePane fx:id="productsTilePane" hgap="15" prefColumns="3" vgap="15" />
+                  </content>
+              </ScrollPane>
+            </VBox>
+
+            <!-- Right Panel - Product Details -->
+            <VBox prefWidth="350" spacing="10" styleClass="card">
+              <Label styleClass="h2" text="Product Details" />
+
+              <GridPane hgap="10" vgap="10">
+                  <columnConstraints>
+                      <ColumnConstraints minWidth="80" />
+                      <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+
+                  <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <Label fx:id="detailNameLabel" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                  <Label text="Price:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <Label fx:id="detailPriceLabel" style="-fx-text-fill: #27ae60;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                  <Label text="Stock:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <Label fx:id="detailStockLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                  <Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <Label fx:id="detailCategoryLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                  <Label text="Barcode:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                  <Label fx:id="detailBarcodeLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                       <rowConstraints>
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                       </rowConstraints>
+              </GridPane>
+
+              <Separator />
+
+              <Label text="Description:" />
+              <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                  <content>
+                      <VBox fx:id="detailDescriptionBox" spacing="5" />
+                  </content>
+              </ScrollPane>
+            </VBox>
+          </HBox>
+        </Tab>
+
+        <!-- Current Bill Tab -->
+        <Tab text="Current Bill">
+          <VBox spacing="10">
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+
+            <Label styleClass="h2" text="Current Bill Details" />
+
+            <!-- Left Side: Bill Entry -->
+            <HBox spacing="10">
+                <!-- Bill Items and Customer Info -->
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <HBox spacing="10">
+                        <VBox>
+                            <Label text="Customer Name" />
+                            <TextField fx:id="billCustomerNameField" prefWidth="200" promptText="Name" />
+                        </VBox>
+                        <VBox>
+                            <Label text="Phone No." />
+                            <TextField fx:id="billCustomerPhoneField" prefWidth="150" promptText="Phone" />
+                        </VBox>
+                    </HBox>
+
+                    <Separator />
+
+                    <Label styleClass="h2" text="Product Details" />
+                    <TableView fx:id="billItemsTable" VBox.vgrow="ALWAYS">
+                      <columns>
+                        <TableColumn fx:id="billItemNameColumn" prefWidth="200" text="Item" />
+                        <TableColumn fx:id="billItemQuantityColumn" prefWidth="100" text="Qty" />
+                        <TableColumn fx:id="billItemPriceColumn" prefWidth="150" text="Price" />
+                        <TableColumn fx:id="billItemTotalColumn" prefWidth="150" text="Total" />
+                      </columns>
+                      <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                      </columnResizePolicy>
+                    </TableView>
+
+                    <!-- Bill Summary -->
+                    <VBox spacing="5" styleClass="card">
+                      <HBox>
+                        <Label text="Total Amount:" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="totalAmountLabel" text="ETB0.00" />
+                      </HBox>
+                      <HBox>
+                        <Label text="Tax (15%):" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="taxAmountLabel" text="ETB0.00" />
+                      </HBox>
+                      <HBox spacing="10">
+                        <Label text="Discount:" />
+                        <TextField fx:id="discountField" prefWidth="80" promptText="0.00" />
+                      </HBox>
+                      <Separator />
+                      <HBox>
+                        <Label styleClass="h2" text="Final Amount:" HBox.hgrow="ALWAYS" />
+                        <Label fx:id="finalAmountLabel" style="-fx-text-fill: #27ae60;" text="ETB0.00" />
+                      </HBox>
+                    </VBox>
+
+                    <!-- Payment Method -->
+                    <HBox spacing="10">
+                      <Label text="Payment:" />
+                      <ComboBox fx:id="paymentMethodComboBox" prefWidth="150" />
+                      <TextField fx:id="paymentDetailsField" editable="false" promptText="Account/Phone Number" />
+                    </HBox>
+
+                    <!-- Action Buttons -->
+                    <HBox spacing="10">
+                      <Button onAction="#processBill" styleClass="button-success" text="Process Bill" />
+                      <Button onAction="#clearBill" styleClass="button-danger" text="❌" />
+                    </HBox>
+                </VBox>
+
+                <!-- Right Side: Bill Receipt -->
+                <VBox prefWidth="350" spacing="10" style="-fx-border-color: #bdc3c7; -fx-border-width: 0 0 0 1; -fx-padding: 0 0 0 10;">
+                    <Label styleClass="h2" text="Bill Area" />
+                    <TextArea fx:id="billReceiptArea" editable="false" style="-fx-font-family: 'Courier New';" VBox.vgrow="ALWAYS" />
+                    <HBox spacing="10">
+                        <Button maxWidth="Infinity" onAction="#printReceipt" text="Print Receipt" HBox.hgrow="ALWAYS" />
+                        <Button onAction="#clearReceipt" styleClass="button-danger" text="❌" />
+                    </HBox>
+                </VBox>
+            </HBox>
+          </VBox>
+        </Tab>
+
+        <!-- Products Management Tab -->
+        <Tab fx:id="newProductTab" text="New Product">
+          <HBox spacing="10">
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            
+            <!-- Product Form -->
+            <VBox alignment="TOP_CENTER" prefWidth="350" spacing="15" styleClass="card">
+              <Label styleClass="h2" text="Add/Edit Product" />
+              
+              <GridPane hgap="10" vgap="10">
+                <columnConstraints>
+                  <ColumnConstraints minWidth="80" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+                </columnConstraints>
+
+                <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                <TextField fx:id="productNameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                <TextField fx:id="productDescriptionField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                <Label text="Price:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                <TextField fx:id="productPriceField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                <Label text="Stock:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                <TextField fx:id="productStockField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                <Label text="Category:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                <TextField fx:id="productCategoryField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+                <Label text="Barcode:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                <TextField fx:id="productBarcodeField" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                       <rowConstraints>
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                          <RowConstraints />
+                       </rowConstraints>
+              </GridPane>
+
+              <VBox alignment="CENTER" spacing="5">
+
+                 <HBox alignment="CENTER" prefHeight="25.0" prefWidth="308.0" spacing="10">
+                   <Button fx:id="addProductButton" onAction="#addProduct" styleClass="button-success" text="➕" />
+                   <Button onAction="#clearProductFields" styleClass="button-secondary" text="❌" />
+                 </HBox>
+                <ImageView fx:id="productImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+              </VBox>
+            </VBox>
+
+            <!-- Products Grid (Replaced Table) -->
+            <VBox spacing="10" HBox.hgrow="ALWAYS">
+              <Label styleClass="h2" text="All Products" />
+              <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+                  <content>
+                      <TilePane fx:id="manageProductsTilePane" hgap="15" prefColumns="3" vgap="15" />
+                  </content>
+              </ScrollPane>
+            </VBox>
+          </HBox>
+        </Tab>
+
+        <!-- Pending Orders Tab -->
+        <Tab fx:id="pendingOrdersTab" text="Pending Orders">
+          <VBox spacing="10">
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+
+            <Label styleClass="h2" text="Pending Customer Orders" />
+            <TableView fx:id="pendingOrdersTable" prefHeight="250" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="pendingOrderIdColumn" prefWidth="60" text="Order ID" />
+                <TableColumn fx:id="pendingCustomerColumn" prefWidth="150" text="Customer" />
+                <TableColumn fx:id="pendingPhoneColumn" prefWidth="120" text="Phone" />
+                <TableColumn fx:id="pendingItemsColumn" prefWidth="250" text="Items" />
+                <TableColumn fx:id="pendingAmountColumn" prefWidth="100" text="Amount" />
+                <TableColumn fx:id="pendingDateColumn" prefWidth="150" text="Date" />
+                <TableColumn fx:id="pendingActionColumn" prefWidth="100" text="Action" />
+              </columns>
+              <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+              </columnResizePolicy>
+            </TableView>
+          </VBox>
+        </Tab>
+
+        <!-- Bills History Tab -->
+        <Tab fx:id="billsHistoryTab" text="Bills History">
+          <VBox spacing="10">
+            <padding>
+              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+
+            <Label styleClass="h2" text="Completed Bills History" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Button onAction="#deleteSelectedBills" styleClass="button-danger" text="❌" />
+            </HBox>
+            <TableView fx:id="billsTable" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="billIdColumn" prefWidth="60" text="Bill ID" />
+                <TableColumn fx:id="billCustomerColumn" prefWidth="150" text="Customer" />
+                <TableColumn fx:id="billCustomerPhoneColumn" prefWidth="120" text="Phone" />
+                <TableColumn fx:id="billItemsColumn" prefWidth="250" text="Ordered Items" />
+                <TableColumn fx:id="billAmountColumn" prefWidth="100" text="Amount" />
+                <TableColumn fx:id="billDateColumn" prefWidth="150" text="Date" />
+              </columns>
+              <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+              </columnResizePolicy>
+            </TableView>
+          </VBox>
+        </Tab>
+      </TabPane>
+    </VBox>
+  </center>
+</BorderPane>
